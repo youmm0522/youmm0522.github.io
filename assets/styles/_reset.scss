@@ -26,6 +26,8 @@ em {
 
 a {
   transition: color .2s;
+  color: inherit;
+
   &:hover {
     color: #ff0099
   }

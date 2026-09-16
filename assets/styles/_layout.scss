@@ -11,10 +11,8 @@ body {
 
 header {
   z-index: 9;
-  position: fixed;
+  position: sticky;
   top: 0;
-  right: 0;
-  left: 0;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -23,6 +21,11 @@ header {
   //background-color: rgba(255,255,255,1);
   //color: #222;
   background-color: #131a20;
+  transition: translate 0.35s ease;
+
+  &.is-hidden {
+    translate: 0 -100%;
+  }
 }
 
 h1 {
@@ -49,12 +52,42 @@ nav {
     color: inherit;
     text-decoration: none;
     font-weight: 600;
+    padding: 1em;
+
+    &:hover {
+      color: #69eca8
+    }
+
+    &.active {
+      color: #69eca8;
+    }
+
+    &.back {
+      span {
+        overflow: hidden;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+      }
+
+      &::before {
+        content: '';
+        display: block;
+        width: 1em;
+        height: 1em;
+        border-left: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        rotate: 45deg
+      }
+    }
   }
 }
 
 main {
   flex-grow: 1;
-  padding-top: 120px;
+  // padding-top: 120px;
 }
 
 footer {
@@ -66,7 +99,6 @@ footer {
   height: 80px;
 
   a {
-    color: inherit;
     padding-left: .4em
   }
 }

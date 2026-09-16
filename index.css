@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
 /**
  * 1. Change the default font family in all browsers (opinionated).
@@ -101,7 +102,8 @@ a:hover {
 abbr[title] {
   border-bottom: none; /* 1 */
   text-decoration: underline; /* 2 */
-  text-decoration: underline dotted; /* 2 */
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted; /* 2 */
 }
 
 /**
@@ -373,21 +375,6 @@ textarea {
   font: inherit; /* 2 */
 }
 
-/*
-Copyright (c) 2021 Kil Hyung-jin, with Reserved Font Name Pretendard.
-https://github.com/orioncactus/pretendard
-
-This Font Software is licensed under the SIL Open Font License, Version 1.1.
-This license is copied below, and is also available with a FAQ at:
-http://scripts.sil.org/OFL
-*/
-@font-face {
-  font-family: "Pretendard Variable";
-  font-weight: 45 920;
-  font-style: normal;
-  font-display: swap;
-  src: url("PretendardVariable.woff2") format("woff2-variations");
-}
 html, body, body #root, input, button, select, textarea, td {
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
@@ -416,6 +403,7 @@ em {
 
 a {
   transition: color 0.2s;
+  color: inherit;
 }
 a:hover {
   color: #ff0099;
@@ -477,16 +465,18 @@ body {
 
 header {
   z-index: 9;
-  position: fixed;
+  position: sticky;
   top: 0;
-  right: 0;
-  left: 0;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   height: 120px;
   padding: 0 3%;
   background-color: #131a20;
+  transition: translate 0.35s ease;
+}
+header.is-hidden {
+  translate: 0 -100%;
 }
 
 h1 {
@@ -513,11 +503,34 @@ nav a {
   color: inherit;
   text-decoration: none;
   font-weight: 600;
+  padding: 1em;
+}
+nav a:hover {
+  color: #69eca8;
+}
+nav a.active {
+  color: #69eca8;
+}
+nav a.back span {
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+nav a.back::before {
+  content: "";
+  display: block;
+  width: 1em;
+  height: 1em;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  rotate: 45deg;
 }
 
 main {
   flex-grow: 1;
-  padding-top: 120px;
 }
 
 footer {
@@ -529,13 +542,12 @@ footer {
   height: 80px;
 }
 footer a {
-  color: inherit;
   padding-left: 0.4em;
 }
 
 .list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
   gap: 5px;
 }
 .list li {
@@ -543,14 +555,21 @@ footer a {
   display: flex;
   aspect-ratio: 1;
 }
-.list li a {
-  flex: 1;
-  display: block;
-  color: inherit;
-}
-.list li a:hover .text {
+.list li:hover .contents {
   opacity: 1;
   background-color: rgba(0, 0, 0, 0.8);
+}
+.list li > a {
+  flex: 1;
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+.list li > a:hover {
+  color: inherit;
 }
 .list li .img {
   position: absolute;
@@ -558,26 +577,100 @@ footer a {
   left: 0;
   width: 100%;
   height: 100%;
+  color: transparent;
 }
 .list li .img img {
   width: 100%;
   height: 100%;
 }
-.list li .text {
+.list li .contents {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
   padding: 2.5em 2em;
-  color: #fff;
   opacity: 0;
   transition: opacity 0.3s, background-color 0.3s;
 }
-.list li .text h3 {
-  font-size: 1.2em;
+.list li .contents h3 {
+  font-size: 1.3em;
   font-weight: 700;
   text-transform: uppercase;
+  margin-bottom: 0.5em;
+}
+.list li .contents .val {
+  color: rgba(255, 255, 255, 0.5);
+}
+.list li .contents_links {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 2.5em 2em;
+}
+.list li .contents_links_target {
+  position: relative;
+  text-decoration: none;
+  padding: 0.5em;
+}
+.list li .contents_links_target:hover {
+  color: #69eca8;
+}
+.list li .contents_links_target::after {
+  content: "→";
+  display: block;
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  right: -1.5em;
+  rotate: -45deg;
 }
 
-/*# sourceMappingURL=index.css.map */
+body:has(.main_work) {
+  background-color: #f6f6f6;
+  color: #222;
+}
+body:has(.main_work) header, body:has(.main_work) footer {
+  background-color: #fff;
+}
+body:has(.main_work)::-webkit-scrollbar-thumb {
+  background-color: #353f4d;
+  border: 3px solid #f6f6f6;
+}
+
+.main_work img {
+  display: block;
+  max-width: 100%;
+}
+
+.section_work_top {
+  position: sticky;
+  top: 120px;
+  z-index: 0;
+  height: calc(100vh - 120px);
+  background-color: #f6f6f6;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+}
+
+.section_work_intro {
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.section_work_intro h2 {
+  width: 100%;
+  max-width: 1440px;
+  text-align: left;
+}
+
+.img_mg {
+  margin: 5em 0;
+}/*# sourceMappingURL=index.css.map */

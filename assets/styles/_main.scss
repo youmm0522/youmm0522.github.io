@@ -1,0 +1,109 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 5px;
+
+  li {
+    position: relative;
+    display: flex;
+    aspect-ratio: 1;
+
+    &:hover {
+      .contents {
+        opacity: 1;
+        background-color: rgba(0,0,0,0.8)
+      }
+    }
+
+    & > a {
+      flex: 1;
+      display: block;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      color: inherit;
+      text-decoration: none;
+
+      &:hover {
+        color: inherit;
+      }
+    }
+
+    .img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: transparent;
+
+      img {
+        width: 100%;
+        height: 100%
+      }
+    }
+
+    .contents {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      padding: 2.5em 2em;
+      opacity: 0;
+      transition: opacity .3s, background-color .3s;
+
+      h3 {
+        font-size: 1.3em;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 0.5em
+      }
+
+      .val {
+        color: rgba(255,255,255,0.5)
+      }
+    }
+
+    .contents_links {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
+      padding: 2.5em 2em;
+    }
+
+    .contents_links_target {
+      position: relative;
+      // line-height: 2em;
+      text-decoration: none;
+      // border: 1px solid currentColor;
+      // border-radius: 2.5em;
+      // transition: background-color .2s, border-color .2s;
+
+      // &:hover {
+      //   color: inherit;
+      //   border-color: #padding: 2.5em 2em;;
+      //   background-color: #69eca8
+      // }
+
+      padding: 0.5em;
+
+      &:hover {        
+        color: #69eca8;
+      }
+
+      &::after {
+        content: '→';
+        display: block;
+        position: absolute;
+        top: 50%;
+        translate:  0 -50%;
+        right: -1.5em;
+        rotate: -45deg
+      }
+    }
+  }
+}

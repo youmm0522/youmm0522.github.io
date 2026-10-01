@@ -16,7 +16,7 @@ header {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  height: 120px;
+  height: var(--header-height);
   padding: 0 3%;
   //background-color: rgba(255,255,255,1);
   //color: #222;
@@ -40,6 +40,7 @@ h1 {
   transform: translate(-50%, -50%);
   text-transform: uppercase;
   line-height: 1.1;
+  text-align: center;
 }
 
 nav {
@@ -100,5 +101,17 @@ footer {
 
   a {
     padding-left: .4em
+  }
+}
+
+@media (max-width: 768px) {
+
+  body,
+  html {
+    font-size: 12px
+  }
+
+  h1 {
+    font-size: 1.2em;
   }
 }
